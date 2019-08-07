@@ -1,4 +1,4 @@
-package pro.xjxh.filecoin.wallet.api.exception;
+package pro.xjxh.wallet.exception;
 
 
 /**

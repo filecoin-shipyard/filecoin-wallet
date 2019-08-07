@@ -1,13 +1,13 @@
-package pro.xjxh.filecoin.wallet;
+package pro.xjxh.wallet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FilecoinWalletApplication {
+public class GammaWalletApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FilecoinWalletApplication.class, args);
+		SpringApplication.run(GammaWalletApplication.class, args);
 	}
 
 }

@@ -1,11 +1,17 @@
-package pro.xjxh.filecoin.wallet.api;
+package pro.xjxh.wallet.filecoin.service.impl;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pro.xjxh.filecoin.wallet.api.exception.ApiError;
-import pro.xjxh.filecoin.wallet.api.exception.ApiException;
+import pro.xjxh.wallet.exception.ApiError;
+import pro.xjxh.wallet.exception.ApiException;
+import pro.xjxh.wallet.filecoin.rpc.FilecoinRpcService;
+import pro.xjxh.wallet.filecoin.service.FilecoinService;
+import pro.xjxh.wallet.filecoin.vo.res.KeyInfo;
+import pro.xjxh.wallet.filecoin.vo.res.MessageStatusRes;
+import pro.xjxh.wallet.filecoin.vo.res.SendMessageRes;
+import pro.xjxh.wallet.filecoin.vo.res.WalletExportRes;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -14,14 +20,15 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
+ * Filecoin 钱包服务实现
  * @author yangjian
  */
 @Service
-public class ApiService {
+public class FilecoinServiceImpl implements FilecoinService {
 
     private static final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -30,11 +37,11 @@ public class ApiService {
 
     private static Retrofit retrofit;
 
-    private static RpcService rpcService;
+    private static FilecoinRpcService rpcService;
 
     @Value("${rpc.logDebug}")
     private Boolean logDebug;
-    @Value("${rpc.baseUrl}")
+    @Value("${filecoin.rpc.baseUrl}")
     private String baseUrl;
 
     @PostConstruct
@@ -51,7 +58,7 @@ public class ApiService {
         builder.client(httpClient.build());
         builder.addConverterFactory(JacksonConverterFactory.create());
         retrofit = builder.build();
-        rpcService =  retrofit.create(RpcService.class);
+        rpcService =  retrofit.create(FilecoinRpcService.class);
     }
 
     /**
@@ -87,8 +94,42 @@ public class ApiService {
         return (ApiError) retrofit.responseBodyConverter(ApiError.class, new Annotation[0]).convert(response.errorBody());
     }
 
-    public List<Map<String, Object>> getChainInfo()
+    @Override
+    public KeyInfo newAddress()
     {
-        return executeSync(rpcService.getChainInfo());
+        Map<String, String> map = executeSync(rpcService.newAddress());
+        String address = map.get("Address");
+        WalletExportRes res = executeSync(rpcService.exportWallet(address));
+        KeyInfo keyInfo = res.getKeyInfo().get(0);
+        keyInfo.setAddress(address);
+        return res.getKeyInfo().get(0);
+    }
+
+    @Override
+    public String sendTransaction(String from, String to, BigDecimal value, BigDecimal gasPrice, Integer gasLimit)
+    {
+        SendMessageRes res = executeSync(rpcService.sendMessage(to, from, value, gasPrice, gasLimit));
+        return res.getCid().getRoot();
+    }
+
+    @Override
+    public MessageStatusRes.Message getTransactionByTxHash(String cid)
+    {
+        MessageStatusRes res = executeSync(rpcService.getMessageStatus(cid));
+        MessageStatusRes.Message message = null;
+        if (res.isOnChain()) {
+            message = res.getChainMsg().getMessage().getMeteredMessage().getMessage();
+            message.setSuccess(true);
+        } else {
+            message = res.getPoolMsg().getMeteredMessage().getMessage();
+            message.setSuccess(false);
+        }
+        return message;
+    }
+
+    @Override
+    public BigDecimal getBalance(String address)
+    {
+        return executeSync(rpcService.getBalance(address));
     }
 }

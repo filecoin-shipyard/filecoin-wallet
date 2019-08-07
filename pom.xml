@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pro.xjxh</groupId>
-	<artifactId>filecoin-wallet</artifactId>
+	<artifactId>gamma-wallet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>filecoin-wallet</name>
-	<description>Filecoin wellet api implements for java</description>
+	<name>gamma-wallet</name>
+	<description>wallet for Gamma mine pool system</description>
 	
 	<properties>
 		<java.version>1.8</java.version>
