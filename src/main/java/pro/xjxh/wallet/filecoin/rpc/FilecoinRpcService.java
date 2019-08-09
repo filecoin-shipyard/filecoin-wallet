@@ -65,8 +65,4 @@ public interface FilecoinRpcService {
 	Call<BigDecimal> getBalance(@Query("arg") String address);
 
 
-
-
-
-
 }

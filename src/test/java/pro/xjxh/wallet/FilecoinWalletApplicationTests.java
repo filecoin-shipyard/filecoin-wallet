@@ -40,7 +40,7 @@ public class FilecoinWalletApplicationTests {
 	{
 		String from = "t16cgjiwgypve4uup27uk4xgppgd3i4nsldpid6ii";
 		String to = "t1esjjrygs7adcfbjnodbpdjzulzobznnln4tmsxq";
-		BigDecimal value = BigDecimal.valueOf(500.005);
+		BigDecimal value = BigDecimal.valueOf(123.456);
 		BigDecimal gasPrice = BigDecimal.valueOf(0.001);
 		Integer gasLimit = 300;
 		String cid = filecoinService.sendTransaction(from, to, value, gasPrice, gasLimit);
