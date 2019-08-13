@@ -2,14 +2,14 @@ package pro.xjxh.wallet;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rockyang.filecoin.vo.res.KeyInfo;
+import org.rockyang.filecoin.vo.res.MessageStatusRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pro.xjxh.wallet.filecoin.vo.res.KeyInfo;
-import pro.xjxh.wallet.filecoin.service.impl.FilecoinServiceImpl;
-import pro.xjxh.wallet.filecoin.vo.res.MessageStatusRes;
+import pro.xjxh.wallet.service.FilecoinService;
 
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ public class FilecoinWalletApplicationTests {
 	private static Logger logger = LoggerFactory.getLogger(FilecoinWalletApplicationTests.class);
 
 	@Autowired
-	private FilecoinServiceImpl filecoinService;
+	private FilecoinService filecoinService;
 
 	/**
 	 * 创建新地址
@@ -54,7 +54,7 @@ public class FilecoinWalletApplicationTests {
 	public void getTransactionStatus()
 	{
 		String cid = "zDPWYqFCtwpgqBEth4wFK53D8Sm9UGxhrL1tueb4RrgFDQLoKC1P";
-		MessageStatusRes.Message message = filecoinService.getTransactionByTxHash(cid);
+		MessageStatusRes.Message message = filecoinService.getTransaction(cid);
 		logger.info("交易信息： {}", message);
 		if (message.isSuccess()) {
 			logger.info("交易确认成功.");
