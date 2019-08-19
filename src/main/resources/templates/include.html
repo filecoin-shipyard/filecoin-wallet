@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<body>
+
+<!-- 页面顶部 -->
+<header th:fragment="top" class="masthead">
+    <div class="inner" id="nav-bar">
+        <h3 class="masthead-brand">
+            <img src="/static/images/logo.png" style="height: 35px; position: relative; top: -4px;">
+            <span class="header-text">Gamma Wallet</span>
+        </h3>
+        <ul class="nav justify-content-center">
+            <li class="nav-item"><a class="nav-link" href="/">创建钱包</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/register">注册应用</a></li>
+	        <li class="nav-item"><a class="nav-link" href="/txs">
+		        <span class="oi oi-transfer"></span> 交易记录</a></li>
+            <li class="nav-item"><a class="nav-link" href="/docs/index.html" target="_blank">
+                <span class="oi oi-document"></span> 文 档</a></li>
+        </ul>
+    </div>
+</header>
+
+<!-- 底部 -->
+<footer th:fragment="footer" class="mastfoot mt-auto">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/vue.min.js"></script>
+    <script src="/static/js/validator.js"></script>
+    <script src="/static/js/jdialog/JDialog.min.js"></script>
+    <script src="/static/js/utils.js"></script>
+    <div class="inner">
+        <p>Designed by <a href="http://www.r9it.com">&copy; 星际鑫航</a>.</p>
+    </div>
+</footer>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-package pro.xjxh.wallet;
+package pro.xjxh.wallet.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FilecoinWalletApplicationTests {
+public class FilecoinServiceTest {
 
-	private static Logger logger = LoggerFactory.getLogger(FilecoinWalletApplicationTests.class);
+	private static Logger logger = LoggerFactory.getLogger(FilecoinServiceTest.class);
 
 	@Autowired
 	private FilecoinService filecoinService;

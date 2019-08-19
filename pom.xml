@@ -12,13 +12,11 @@
 	<artifactId>gamma-wallet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gamma-wallet</name>
-	<description>wallet for Gamma mine pool system</description>
+	<description>wallet for Gamma miner pool system</description>
 	
 	<properties>
 		<java.version>1.8</java.version>
-		<retrofit2.version>2.5.0</retrofit2.version>
-		<converter-scalars.version>2.5.0</converter-scalars.version>
-		<okhttp.version>3.12.0</okhttp.version>
+		<thymeleaf-layout-dialect.version>2.0.0</thymeleaf-layout-dialect.version>
 	</properties>
 	
 	<dependencies>
@@ -26,11 +24,34 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.rockyang</groupId>
 			<artifactId>filecoin-api-client-spring-boot-starter</artifactId>
 			<version>0.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-core</artifactId>
+			<version>4.5.11</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.59</version>
+		</dependency>
+		
+		<!-- 热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
 		</dependency>
 		
 		<dependency>
@@ -41,10 +62,49 @@
 	</dependencies>
 	
 	<build>
+		<!-- packaging resources -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/java/</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**</include>
+				</includes>
+			</testResource>
+			<testResource>
+				<directory>src/test/java/</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</testResource>
+		</testResources>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<addResources>true</addResources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

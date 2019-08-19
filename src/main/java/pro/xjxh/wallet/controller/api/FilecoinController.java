@@ -1,4 +1,4 @@
-package pro.xjxh.wallet.controller;
+package pro.xjxh.wallet.controller.api;
 
 import org.rockyang.filecoin.vo.res.KeyInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,11 @@ import pro.xjxh.wallet.vo.AddressVo;
 import java.math.BigDecimal;
 
 /**
+ * Filecoin wallet api
  * @author yangjian
  */
 @RestController
-@RequestMapping("/filecoin")
+@RequestMapping("/api/filecoin")
 public class FilecoinController {
 
 	@Autowired
