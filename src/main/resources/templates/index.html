@@ -19,13 +19,13 @@
 	<div th:replace="include :: top">header goes here.</div>
 	
 	<main role="main" class="inner cover mt-5 pt-5" id="app">
-		<h1 class="cover-heading">开始创建你的 Filecoin 钱包.</h1>
-		<p class="lead m-4">Gamma Wallet 是一款 Filecoin 轻钱包，目前基于 Filecoin
-			开发网络，由于开发网络目前钱包的功能尚未开发完成，本钱目前仅实现了创建钱包，转账，和查看余额的功能。</p>
-		<div class="lead">
-			<input type="password" class="form-control form-control-lg mb-3" name="walletPass" v-model="walletPass"
-			       placeholder="请牢记您的钱包密码，至少 8 位">
-			<a href="javascript:void(0);" v-on:click="newAddress" class="btn btn-lg btn-secondary">创建钱包地址</a>
+		<h1 class="cover-heading">Filecoin 钱包（开发网络版）.</h1>
+		<p class="lead m-4 text-left">Gamma Wallet 是一款 Filecoin 轻钱包，目前基于 Filecoin
+			开发网络，由于开发网络目前钱包的功能尚未开发完成，目前仅实现了创建钱包，转账，和查看余额的功能。
+			等官方钱包接口完善之后我们会同步更新。
+		</p>
+		<div class="text-center">
+			<a href="javascript:void(0);" v-on:click="newAddress" class="btn btn-lg btn-primary">生成一个新的钱包地址</a>
 		</div>
 		
 		<div class="card mt-4" v-show="show">
@@ -40,8 +40,7 @@
 				</div>
 				
 				<div>
-					<button type="button" class="btn btn-success mb-2 ml-2" v-on:click="downloadWallet">下载钱包 Keystore
-						文件</button>
+					<button type="button" class="btn btn-success mb-2 ml-2" v-on:click="downloadWallet">下载钱包文件</button>
 				</div>
 			</div>
 		</div>
@@ -65,18 +64,10 @@
 		methods: {
 			// 创建一个新钱包
 			newAddress: function () {
-				if (this.walletPass == '') {
-					return messageError("请输入钱包密码");
-				}
-				if (this.walletPass.length < 8) {
-					return messageError("钱包密码必须8位以上");
-				}
 				var that = this;
 				var loading = messageLoading();
 				setTimeout(function () {
-					httpPost("/wallet/address/create", {
-						walletPass: that.walletPass
-					}, function
+					httpGet("/api/filecoin/newAddress", function
 						(res) {
 						messageOk("钱包创建成功.");
 						loading.hide();

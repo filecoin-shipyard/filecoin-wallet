@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="/static/css/icons/css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="/static/css/main.css">
 	<link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon"/>
-	<title th:text="${title}"> 注册应用</title>
+	<title th:text="${title}"> 发送 FIL</title>
 </head>
 <body class="text-center">
 
@@ -17,53 +17,34 @@
 	<div th:replace="include :: top">header goes here.</div>
 	
 	<main role="main" class="inner cover" id="app">
-		<div class="alert alert-primary" role="alert">
-			<span style="font-size: 1.75rem;">注册应用</span>
-		</div>
 		
 		<form class="text-left" id="app-form">
 			<div class="form-group">
-				<label>应用名称</label>
-				<input type="text" name="name" v-model="name" class="form-control" placeholder="应用名称">
+				<label>收款地址</label>
+				<input type="text" name="name" v-model="name" class="form-control" placeholder="收款地址">
 			</div>
 			<div class="form-group">
-				<label>手机号码</label>
-				<div class="input-group">
-					<input type="text" name="mobile" v-model="mobile" class="form-control" placeholder="手机号码">
-					<div class="input-group-append">
-						<span class="input-group-text" v-on:click="sendMessage" style="cursor: pointer;">发送短信验证码
-						</span>
-					</div>
-				</div>
+				<label>钱包私钥</label>
+				<input type="text" name="name" v-model="name" class="form-control" placeholder="钱包私钥">
 			</div>
 			<div class="form-group">
-				<label>短信验证码</label>
-				<input type="text" name="scode" v-model="scode" class="form-control" placeholder="短信验证码">
+				<label>转账金额</label>
+				<input type="number" step="0.1" name="name" v-model="name" class="form-control" placeholder="转账金额">
+			</div>
+			<div class="form-group">
+				<label>Gas Price</label>
+				<input type="number" step="0.01" name="gasPrice" v-model="gasPrice" class="form-control"
+				       placeholder="Gas Price">
 			</div>
 			
 			<div class="form-group">
-				<label>收款钱包地址</label>
-				<input type="text" name="address" v-model="address" class="form-control" placeholder="收款钱包地址">
+				<label>Gas Limit</label>
+				<input type="number" step="100" name="gasLimit" v-model="gasLimit" class="form-control"
+				       placeholder="Gas Limit">
 			</div>
 			
-			<div class="form-group">
-				<label>API 回调地址</label>
-				<input type="text" name="apiUrl" v-model="apiUrl" class="form-control" placeholder="API 回调地址">
-			</div>
-			
-			<div  v-show="show">
-				<div class="form-group">
-					<label>appId</label>
-					<input type="text" v-model="appId" class="form-control-plaintext text-white" readonly>
-				</div>
-				
-				<div class="form-group">
-					<label>API 秘钥</label>
-					<input type="text" v-model="apiKey" class="form-control-plaintext text-white" readonly>
-				</div>
-			</div>
-			
-			<button type="button" v-on:click="submit" class="btn btn-primary">提交</button>
+			<button type="button" v-on:click="submit" style="padding: 0.55rem 1.25rem;"
+			        class="mt-4 btn btn-primary btn-block">发送交易</button>
 		</form>
 	
 	</main>
@@ -78,8 +59,8 @@
 		data: {
 			name: "",
 			mobile: "",
-			scode: "",
-			apiUrl: "",
+			gasPrice: "0.001",
+			gasLimit: "300",
 			apiKey: "",
 			appId: "",
 			address: "",
