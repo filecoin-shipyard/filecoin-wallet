@@ -8,9 +8,8 @@ package pro.xjxh.wallet.enums;
 public enum BizErrorCode {
 
     SUCCESS("000", "操作成功."),
-    FAIL("001", "操作失败."),
+    FAIL("001", "系统开了小差."),
     PARAM_ERROR("002", "参数错误."),
-    UNKONW_ERROR("101", "系统开了小差."),
     NO_RECORDS("102", "查无记录."),
     UNSURPPORT_OPT("103", "暂时不支持此操作.");
 

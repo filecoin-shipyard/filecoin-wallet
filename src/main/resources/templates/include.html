@@ -7,11 +7,14 @@
 <header th:fragment="top" class="masthead">
     <div class="inner" id="nav-bar">
         <h3 class="masthead-brand">
-            <img src="/static/images/logo.png" style="height: 35px; position: relative; top: -4px;">
-            <span class="header-text">Gamma Wallet</span>
+            <a href="/" style="text-decoration: none">
+                <img src="/static/images/logo.png" style="height: 35px; position: relative; top: -4px;">
+                <span class="header-text">Gamma Wallet</span>
+            </a>
         </h3>
         <ul class="nav justify-content-center">
             <li class="nav-item"><a class="nav-link" href="/">创建钱包</a></li>
+            <li class="nav-item"><a class="nav-link" href="/wallet/import">导入钱包</a></li>
 	        <li class="nav-item"><a class="nav-link" href="/transfer">
 		        <span class="oi oi-transfer"></span> 转账</a></li>
             <li class="nav-item"><a class="nav-link" href="/balance">
@@ -28,9 +31,10 @@
     <script src="/static/js/vue.min.js"></script>
     <script src="/static/js/validator.js"></script>
     <script src="/static/js/jdialog/JDialog.min.js"></script>
+    <script src="/static/js/uploader/JUpload.min.js"></script>
     <script src="/static/js/utils.js"></script>
     <div class="inner">
-        <p>Designed by <a href="http://www.r9it.com">&copy; 星际鑫航</a>.</p>
+        <p>Designed by &copy; <a href="http://www.xjxh.pro">星际鑫航</a>.</p>
     </div>
 </footer>
 </body>

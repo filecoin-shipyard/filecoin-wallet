@@ -23,15 +23,17 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public BizVo handle(HttpServletRequest request, HttpServletResponse response, Exception e) throws IOException {
+    public BizVo handle(HttpServletRequest request, HttpServletResponse response, Exception e) throws IOException
+    {
 
+        // TODO logger here
         logger.error("Exception for URL: {}", request.getRequestURI());
         logger.error("======> {}", e);
 
         //ajax request
         if (request.getHeader("X-Requested-With") != null
                 && "XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-            return BizVo.fail(e.getMessage());
+            return BizVo.fail();
         } else {
             response.sendRedirect("/error");
             return null;

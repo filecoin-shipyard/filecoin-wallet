@@ -48,4 +48,16 @@ public class FilecoinServiceImpl implements FilecoinService {
 	{
 		return filecoin.getBalance(address);
 	}
+
+	@Override
+	public String importWallet(String privateKey)
+	{
+		return filecoin.walletImport(privateKey);
+	}
+
+	@Override
+	public KeyInfo exportWallet(String address)
+	{
+		return filecoin.walletExport(address);
+	}
 }

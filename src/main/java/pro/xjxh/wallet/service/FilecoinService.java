@@ -40,4 +40,18 @@ public interface FilecoinService {
 	 * @return
 	 */
 	BigDecimal getBalance(String address);
+
+	/**
+	 * import wallet with privateKey
+	 * @param privateKey
+	 * @return
+	 */
+	String importWallet(String privateKey);
+
+	/**
+	 * export the specified wallet
+	 * @param address
+	 * @return
+	 */
+	KeyInfo exportWallet(String address);
 }

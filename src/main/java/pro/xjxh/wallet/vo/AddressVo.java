@@ -1,13 +1,20 @@
 package pro.xjxh.wallet.vo;
 
+import java.math.BigDecimal;
+
 /**
+ * wallet address vo
  * @author yangjian
  */
 public class AddressVo {
-	// 钱包地址
+
 	private String address;
-	// 钱包私钥
 	private String privateKey;
+	private BigDecimal balance;
+
+	public AddressVo(String address) {
+		this.address = address;
+	}
 
 	public String getAddress() {
 		return address;
@@ -23,5 +30,13 @@ public class AddressVo {
 
 	public void setPrivateKey(String privateKey) {
 		this.privateKey = privateKey;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
 	}
 }

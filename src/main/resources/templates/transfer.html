@@ -10,6 +10,11 @@
 	<link rel="stylesheet" href="/static/css/main.css">
 	<link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon"/>
 	<title th:text="${title}"> 发送 FIL</title>
+	<style>
+		.form-group label {
+			color: #ffffff;
+		}
+	</style>
 </head>
 <body class="text-center">
 
@@ -17,19 +22,23 @@
 	<div th:replace="include :: top">header goes here.</div>
 	
 	<main role="main" class="inner cover" id="app">
+		<div class="alert alert-success text-left" role="alert" v-show="show">
+			Success! Message CID: {{cid}}
+		</div>
 		
-		<form class="text-left" id="app-form">
+		<form class="text-left" id="transfer-form">
+			<div class="form-group">
+				<label>付款地址</label>
+				<input type="text" name="from" v-model="from" class="form-control" placeholder="付款地址" readonly>
+			</div>
+			
 			<div class="form-group">
 				<label>收款地址</label>
-				<input type="text" name="name" v-model="name" class="form-control" placeholder="收款地址">
-			</div>
-			<div class="form-group">
-				<label>钱包私钥</label>
-				<input type="text" name="name" v-model="name" class="form-control" placeholder="钱包私钥">
+				<input type="text" name="to" v-model="to" class="form-control" placeholder="收款地址">
 			</div>
 			<div class="form-group">
 				<label>转账金额</label>
-				<input type="number" step="0.1" name="name" v-model="name" class="form-control" placeholder="转账金额">
+				<input type="number" step="0.1" name="value" v-model="value" class="form-control" placeholder="转账金额">
 			</div>
 			<div class="form-group">
 				<label>Gas Price</label>
@@ -53,68 +62,60 @@
 </div>
 
 <script>
-	
+	$(document).ready(function () {
+		var address = localStorage.getItem('address');
+		if (address == null) {
+			JDialog.alert({title: '操作提示', content: '请先导入钱包', closeBtn: false, dragable: false, offset: 150,
+				callback: function () {
+				location.href = "/wallet/import";
+			}});
+		}
+	})
 	new Vue({
 		el: "#app",
 		data: {
-			name: "",
-			mobile: "",
-			gasPrice: "0.001",
-			gasLimit: "300",
-			apiKey: "",
-			appId: "",
-			address: "",
+			from: localStorage.getItem("address"),
+			to: "",
+			gasPrice: 0.001,
+			gasLimit: 300,
+			value: 0,
+			cid: "",
 			show: false,
-			send: false, // 是否发送了短信
 		},
 		methods: {
-			// 发送短信
-			sendMessage: function(e) {
-				if (this.send) {
-					return messageError("您的操作过于频繁.");
-				}
-				var validator = new Validator();
-				if (!validator.validate(this.mobile, "mobile")) {
-					return messageError("请输入正确的手机号码.");
-				}
-				this.send = true;
-				httpPost("/app/sendMessage", {mobile: this.mobile}, function () {
-					messageOk("短信发送成功");
-				}, function () {
-					messageError("短信发送失败");
-				})
-			},
-			// 创建一个新钱包
+			// 发送转账交易
 			submit: function () {
 				var that = this;
-				var validator = new Validator();
-				if (this.name.trim() == '') {
-					return messageError("应用名称不能为空.");
-				}
-				if (!validator.validate(this.mobile, "mobile")) {
-					return messageError("请输入正确的手机号码.");
-				}
-				if (this.address.trim() == '') {
+				if (this.to.trim() == '') {
 					return messageError("收款地址不能为空.");
 				}
-				if (this.apiUrl.trim() == '') {
-					return messageError("API 回调地址不能为空.");
+				if (this.value <= 0) {
+					return messageError("请输入转账金额.");
+				}
+				if (this.gasPrice <= 0) {
+					return messageError("请输入合法的 GasPrice.");
+				}
+				if (this.gasLimit <= 0) {
+					return messageError("请输入合法的 GasLimit.");
 				}
 				var loading = messageLoading();
 				setTimeout(function () {
-					httpPost("/app/doAdd", getFormData("app-form"), function (res) {
+					httpPost("/api/filecoin/transaction/send", getFormData("transfer-form"), function (res) {
+						
 						var data = res.data;
-						that.apiKey = data.apiKey;
-						that.appId = data.id;
-						that.show = true;
 						loading.hide();
-						document.getElementById("app-form").reset();
-						messageOk("应用创建成功.");
+						that.cid = data;
+						that.show = true;
+						messageOk("交易发送成功.");
+
+						that.to = "";
+						that.value = 0;
+						
 					}, function (message) {
 						messageError(message);
 						loading.hide();
 					});
-				}, 1000);
+				}, 500);
 				
 			}
 		}

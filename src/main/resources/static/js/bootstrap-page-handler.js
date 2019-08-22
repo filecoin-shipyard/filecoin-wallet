@@ -2,7 +2,6 @@
  * bootstrap v4.0 分页插件
  * 分页样式，每页记录数，参数过滤
  * @author yangjian
- * @since 18-12-25 上午11:37.
  */
 $.fn.extend({
 	pageHandler: function(options) {

@@ -16,8 +16,9 @@ import java.io.*;
 public class WalletController {
 
 	@GetMapping({"", "/"})
-	public String index()
+	public String index(HttpServletRequest request)
 	{
+		request.setAttribute("title", "Gamma 钱包");
 		return "index";
 	}
 
@@ -47,10 +48,33 @@ public class WalletController {
 		toClient.close();
 	}
 
+	/**
+	 * FIL 转账
+	 * @param request
+	 * @return
+	 */
 	@GetMapping("/transfer")
 	public String transfer(HttpServletRequest request)
 	{
 		request.setAttribute("title", "Gamma Wallet - 发送 FIL");
 		return "transfer";
+	}
+
+	/**
+	 * 导入钱包
+	 * @return
+	 */
+	@GetMapping("/wallet/import")
+	public String walletImport(HttpServletRequest request)
+	{
+		request.setAttribute("title", "导入钱包");
+		return "import-wallet";
+	}
+
+	@GetMapping("/wallet/balance")
+	public String balance(HttpServletRequest request)
+	{
+		request.setAttribute("title", "查询余额");
+		return "balance";
 	}
 }
