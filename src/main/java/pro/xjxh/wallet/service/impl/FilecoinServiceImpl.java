@@ -44,6 +44,12 @@ public class FilecoinServiceImpl implements FilecoinService {
 	}
 
 	@Override
+	public MessageStatusRes getMessageStatus(String cid)
+	{
+		return filecoin.getMessageStatus(cid);
+	}
+
+	@Override
 	public BigDecimal getBalance(String address)
 	{
 		return filecoin.getBalance(address);

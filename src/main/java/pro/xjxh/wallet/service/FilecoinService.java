@@ -34,6 +34,8 @@ public interface FilecoinService {
 	 */
 	MessageStatusRes.Message getTransaction(String cid);
 
+	MessageStatusRes getMessageStatus(String cid);
+
 	/**
 	 * 查询钱包地址
 	 * @param address

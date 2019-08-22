@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/css/icons/css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="/static/css/main.css">
+	<link rel="stylesheet" href="/static/js/json-viewer/jquery.json-viewer.css">
 	<link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon"/>
 	<title th:text="${title}"></title>
 </head>
@@ -18,22 +19,21 @@
 	
 	<main role="main" class="inner cover" id="app">
 		<div class="container wallet-info p-4">
-			<div class="alert alert-success text-left" role="alert" v-show="show">
-				Balance: {{balance}}
-			</div>
 			
 			<form class="text-left">
 				<div class="form-group">
-					<label>请输入钱包地址</label>
-					<input type="text" name="address" v-model="address" class="form-control"
-					       placeholder="钱包地址">
+					<label>请输入 Message CID</label>
+					<input type="text" name="cid" v-model="cid" class="form-control"
+					       placeholder="Message CID">
 				</div>
 				
 				<button type="button" v-on:click="submit" style="padding: 0.55rem 1.25rem; letter-spacing:20px;"
 				        class="mt-4 btn btn-primary btn-block">查询</button>
 			</form>
+			
+			<div class="text-left" id="message"></div>
 		</div>
-	
+		
 	</main>
 	
 	<div th:replace="include :: footer">footer goes here.</div>
@@ -44,22 +44,21 @@
 		el: "#app",
 		data: {
 			show: false,
-			balance: 0,
-			address: ""
+			cid: ""
 		},
 		methods: {
 			submit: function () {
 				var that = this;
-				if (this.address.trim() == '') {
-					return messageError("请输入钱包地址.");
+				if (this.cid.trim() == '') {
+					return messageError("请输入 Message CID.");
 				}
 				var loading = messageLoading();
 				setTimeout(function () {
-					httpPost("/api/filecoin/wallet/balance", {
-						address : that.address
+					httpPost("/api/filecoin/message/get", {
+						cid : that.cid
 					}, function (res) {
 						var data = res.data;
-						that.balance = data;
+						$('#message').jsonViewer(data);
 						that.show = true;
 						loading.hide();
 					}, function (message) {
@@ -71,6 +70,7 @@
 			}
 		}
 	});
+	
 </script>
 </body>
 </html>

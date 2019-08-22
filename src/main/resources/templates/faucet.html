@@ -18,19 +18,22 @@
 	
 	<main role="main" class="inner cover" id="app">
 		<div class="container wallet-info p-4">
+			<div class="alert alert-danger text-left" role="alert">
+				注意：同一个钱包地址，每小时只能获取一次测试代币，每次 1000 FIL。
+			</div>
+			
 			<div class="alert alert-success text-left" role="alert" v-show="show">
-				Balance: {{balance}}
+				{{message}}
 			</div>
 			
 			<form class="text-left">
 				<div class="form-group">
-					<label>请输入钱包地址</label>
 					<input type="text" name="address" v-model="address" class="form-control"
 					       placeholder="钱包地址">
 				</div>
 				
 				<button type="button" v-on:click="submit" style="padding: 0.55rem 1.25rem; letter-spacing:20px;"
-				        class="mt-4 btn btn-primary btn-block">查询</button>
+				        class="mt-4 btn btn-primary btn-block">提交</button>
 			</form>
 		</div>
 	
@@ -43,8 +46,8 @@
 	new Vue({
 		el: "#app",
 		data: {
+			message: "",
 			show: false,
-			balance: 0,
 			address: ""
 		},
 		methods: {
@@ -55,11 +58,10 @@
 				}
 				var loading = messageLoading();
 				setTimeout(function () {
-					httpPost("/api/filecoin/wallet/balance", {
+					httpPost("/api/filecoin/faucet", {
 						address : that.address
 					}, function (res) {
-						var data = res.data;
-						that.balance = data;
+						that.message = res.message;
 						that.show = true;
 						loading.hide();
 					}, function (message) {

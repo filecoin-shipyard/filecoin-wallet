@@ -77,4 +77,22 @@ public class WalletController {
 		request.setAttribute("title", "查询余额");
 		return "balance";
 	}
+
+	/**
+	 * query message by cid
+	 * @return
+	 */
+	@GetMapping("/message/query")
+	public String queryMessage(HttpServletRequest request)
+	{
+		request.setAttribute("title", "交易查询");
+		return "message-query";
+	}
+
+	@GetMapping("/faucet")
+	public String faucet(HttpServletRequest request)
+	{
+		request.setAttribute("title", "免费获取测试代币");
+		return "faucet";
+	}
 }

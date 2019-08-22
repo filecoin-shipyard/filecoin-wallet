@@ -15,16 +15,23 @@
         <ul class="nav justify-content-center">
             <li class="nav-item"><a class="nav-link" href="/">创建钱包</a></li>
             <li class="nav-item"><a class="nav-link" href="/wallet/import">导入钱包</a></li>
-	        <li class="nav-item"><a class="nav-link" href="/transfer">
-		        <span class="oi oi-transfer"></span> 转账</a></li>
-            <li class="nav-item"><a class="nav-link" href="/balance">
+            <li class="nav-item"><a class="nav-link" href="/wallet/balance">
                 <span class="oi oi-dollar"></span> 查询余额</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">交易 FIL</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/transfer">发送转账</a>
+                    <a class="dropdown-item" href="/message/query">交易查询</a>
+                    <a class="dropdown-item" href="/faucet">获取测试代币</a>
+                </div>
+            </li>
         </ul>
     </div>
 </header>
 
 <!-- 底部 -->
-<footer th:fragment="footer" class="mastfoot mt-auto">
+<footer th:fragment="footer" class="mastfoot mt-auto pt-3">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/popper.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
@@ -32,6 +39,7 @@
     <script src="/static/js/validator.js"></script>
     <script src="/static/js/jdialog/JDialog.min.js"></script>
     <script src="/static/js/uploader/JUpload.min.js"></script>
+    <script src="/static/js/json-viewer/jquery.json-viewer.js"></script>
     <script src="/static/js/utils.js"></script>
     <div class="inner">
         <p>Designed by &copy; <a href="http://www.xjxh.pro">星际鑫航</a>.</p>

@@ -38,7 +38,8 @@
 			</div>
 			<div class="form-group">
 				<label>转账金额</label>
-				<input type="number" step="0.1" name="value" v-model="value" class="form-control" placeholder="转账金额">
+				<input type="number" step="0.1" name="value" v-model="value" class="form-control"
+				       placeholder="转账金额">
 			</div>
 			<div class="form-group">
 				<label>Gas Price</label>
@@ -64,7 +65,7 @@
 <script>
 	$(document).ready(function () {
 		var address = localStorage.getItem('address');
-		if (address == null) {
+		if (address.length < 20) {
 			JDialog.alert({title: '操作提示', content: '请先导入钱包', closeBtn: false, dragable: false, offset: 150,
 				callback: function () {
 				location.href = "/wallet/import";
@@ -78,7 +79,7 @@
 			to: "",
 			gasPrice: 0.001,
 			gasLimit: 300,
-			value: 0,
+			value: "0 FIL",
 			cid: "",
 			show: false,
 		},

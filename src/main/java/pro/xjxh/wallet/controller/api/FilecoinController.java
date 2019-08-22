@@ -1,7 +1,12 @@
 package pro.xjxh.wallet.controller.api;
 
 import com.alibaba.fastjson.JSON;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.rockyang.filecoin.vo.res.KeyInfo;
+import org.rockyang.filecoin.vo.res.MessageStatusRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,17 +52,6 @@ public class FilecoinController {
 		return BizVo.success(addressVo);
 	}
 
-	/**
-	 * query balance of the specified wallet by address
-	 * @param address
-	 * @return
-	 */
-	@GetMapping("/balance")
-	public BigDecimal getBalance(String address)
-	{
-		return filecoinService.getBalance(address);
-	}
-
 	@PostMapping("/transaction/send")
 	public BizVo sendTransaction(
 			@RequestParam String from,
@@ -101,5 +95,52 @@ public class FilecoinController {
 		String text = new String(bytes);
 		KeyExport keyExport = JSON.parseObject(text, KeyExport.class);
 		return importWalletPrivateKey(keyExport.getKeyInfos().get(0).getPrivateKey());
+	}
+
+	/**
+	 * query balance of the specified wallet by address
+	 * @param address
+	 * @return
+	 */
+	@PostMapping("/wallet/balance")
+	public BizVo getBalance(String address)
+	{
+		return BizVo.success(filecoinService.getBalance(address));
+	}
+
+	/**
+	 * query message status by cid
+	 * @param cid
+	 * @return
+	 */
+	@PostMapping("/message/get")
+	public BizVo queryMessage(String cid)
+	{
+		MessageStatusRes message = filecoinService.getMessageStatus(cid);
+		return BizVo.success(message);
+	}
+
+	/**
+	 * request Mock FIL token from filecoin dev network
+	 * @param address
+	 * @return
+	 * @throws IOException
+	 */
+	@PostMapping("/faucet")
+	public BizVo faucet(String address) throws IOException
+	{
+		OkHttpClient client = new OkHttpClient();
+		FormBody.Builder formBody = new FormBody.Builder();
+		formBody.add("target", address);
+		Request request = new Request.Builder()
+				.url("http://user.kittyhawk.wtf:9797/tap")
+				.post(formBody.build())
+				.build();
+		Response response;
+		response = client.newCall(request).execute();
+		if (response.isSuccessful()) {
+			return BizVo.success(response.body().string());
+		}
+		return BizVo.fail("获取测试代币失败，" + response.message());
 	}
 }
