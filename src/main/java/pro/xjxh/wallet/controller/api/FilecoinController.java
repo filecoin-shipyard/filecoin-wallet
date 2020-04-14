@@ -8,6 +8,7 @@ import okhttp3.Response;
 import org.rockyang.filecoin.vo.res.KeyInfo;
 import org.rockyang.filecoin.vo.res.MessageStatusRes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pro.xjxh.wallet.service.FilecoinService;
@@ -30,6 +31,8 @@ public class FilecoinController {
 
 	@Autowired
 	private FilecoinService filecoinService;
+	@Value("${filecoin.faucet-url}")
+	private String faucetUrl;
 
 	/**
 	 * create a new wallet
@@ -133,7 +136,7 @@ public class FilecoinController {
 		FormBody.Builder formBody = new FormBody.Builder();
 		formBody.add("target", address);
 		Request request = new Request.Builder()
-				.url("http://user.kittyhawk.wtf:9797/tap")
+				.url(faucetUrl+"tap")
 				.post(formBody.build())
 				.build();
 		Response response;
