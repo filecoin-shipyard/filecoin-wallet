@@ -18,7 +18,7 @@ public class WalletController {
 	@GetMapping({"", "/"})
 	public String index(HttpServletRequest request)
 	{
-		request.setAttribute("title", "Gamma 钱包");
+		request.setAttribute("title", "Filecoin 钱包");
 		return "index";
 	}
 
@@ -56,7 +56,7 @@ public class WalletController {
 	@GetMapping("/transfer")
 	public String transfer(HttpServletRequest request)
 	{
-		request.setAttribute("title", "Gamma Wallet - 发送 FIL");
+		request.setAttribute("title", "Filecoin Wallet - 发送 FIL");
 		return "transfer";
 	}
 

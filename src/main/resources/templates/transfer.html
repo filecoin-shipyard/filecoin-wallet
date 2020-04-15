@@ -1,21 +1,14 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/static/css/icons/css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="/static/css/main.css">
-	<link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon"/>
-	<title th:text="${title}"> 发送 FIL</title>
-	<style>
-		.form-group label {
-			color: #ffffff;
-		}
-	</style>
-</head>
+
+<head th:replace="include :: head">page head</head>
+
+<style>
+	.form-group label {
+		color: #ffffff;
+	}
+</style>
+
 <body class="text-center">
 
 <div class="container d-flex h-100 p-3 mx-auto flex-column">

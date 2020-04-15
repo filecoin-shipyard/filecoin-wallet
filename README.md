@@ -1,4 +1,4 @@
-# Gamma-Wallet
+# Filecoin-Wallet
 
 A Filecoin web wallet developed by Java
 
